@@ -78,6 +78,11 @@
         <div class="nav">
             <a href="/" class="nav-link">&larr; Dashboard</a>
             <a href="/products" class="nav-active">Products</a>
+            <a href="/customers" class="nav-link">Customers</a>
+            <a href="/subscriptions" class="nav-link">Subscriptions</a>
+            <a href="/transactions" class="nav-link">Transactions</a>
+            <a href="/licenses" class="nav-link">Licenses</a>
+            <a href="/discounts" class="nav-link">Discounts</a>
         </div>
 
         @if(session('success'))

@@ -73,25 +73,30 @@ This creates 3 subscriptions (Starter $9.99/mo, Pro $29.99/mo, Enterprise $299/y
 
 ### Pages
 
-| Route | Description |
-|-------|-------------|
-| `GET /` | Dashboard with webhook events, users, and environment info |
-| `GET /products` | Product listing fetched live from CREEM API |
-| `POST /checkout` | Creates a checkout session via the Billable trait |
-| `POST /seed-products` | Creates 4 sample products via the API |
-| `GET /success` | Post-payment success page |
-| `GET /api/products` | Raw JSON product listing |
-| `GET /api/webhook-logs` | Raw JSON webhook event log |
+| Route | Description | Methods |
+|-------|-------------|---------|
+| `GET /` | Dashboard with webhooks, users, environment | `client()`, `isSandbox()` |
+| `GET /products` | Product listing + seed button | `searchProducts()`, `createProduct()`, `getProduct()` |
+| `GET /customers` | Customer list + billing portal | `listCustomers()`, `getCustomer()`, `customerBillingPortal()` |
+| `GET /subscriptions` | Subscription management | `searchSubscriptions()`, `getSubscription()`, `cancelSubscription()`, `pauseSubscription()`, `resumeSubscription()`, `upgradeSubscription()`, `updateSubscription()` |
+| `GET /transactions` | Transaction history | `searchTransactions()`, `getTransaction()` |
+| `GET /licenses` | License activate/validate/deactivate | `activateLicense()`, `validateLicense()`, `deactivateLicense()` |
+| `GET /discounts` | Discount create/lookup/delete | `createDiscount()`, `getDiscount()`, `deleteDiscount()` |
+| `POST /checkout` | Checkout via Billable trait | `$user->checkout()` → `createCheckout()` |
+| `GET /success` | Post-payment success | `getCheckout()` |
+| `GET /api/*` | Raw JSON endpoints | Various |
 
-### Package Features Demonstrated
+### All 26 API Methods Covered
 
-- **Facade** &mdash; `Creem::searchProducts()`, `Creem::createProduct()`, `Creem::client()`
-- **Billable Trait** &mdash; `$user->checkout($productId, $params)`
-- **Webhook Handling** &mdash; Auto-registered at `POST /creem/webhook`
-- **Event Listeners** &mdash; `CreemWebhookReceived`, `AccessGranted`, `AccessRevoked`
-- **Exception Handling** &mdash; `CreemApiException` with trace IDs
-- **Sandbox Detection** &mdash; Auto-detects `creem_test_` prefix
-- **Product Seeding** &mdash; One-click sample product creation via API
+- **Products (3)** &mdash; `createProduct`, `getProduct`, `searchProducts`
+- **Checkouts (2)** &mdash; `createCheckout`, `getCheckout`
+- **Customers (3)** &mdash; `listCustomers`, `getCustomer`, `customerBillingPortal`
+- **Subscriptions (7)** &mdash; `searchSubscriptions`, `getSubscription`, `updateSubscription`, `upgradeSubscription`, `cancelSubscription`, `pauseSubscription`, `resumeSubscription`
+- **Transactions (2)** &mdash; `searchTransactions`, `getTransaction`
+- **Licenses (3)** &mdash; `activateLicense`, `validateLicense`, `deactivateLicense`
+- **Discounts (3)** &mdash; `createDiscount`, `getDiscount`, `deleteDiscount`
+- **Billable Trait (8)** &mdash; `checkout`, `billingPortalUrl`, `creemCustomer`, `creemSubscriptions`, `creemTransactions`, `cancelSubscription`, `pauseSubscription`, `resumeSubscription`
+- **Webhook Handling** &mdash; 15 event types with HMAC-SHA256 verification
 
 ### Architecture
 

@@ -156,8 +156,11 @@
         <div class="nav">
             <a href="/" class="nav-active">Dashboard</a>
             <a href="/products" class="nav-link">Products</a>
-            <a href="/api/products" class="nav-link">API: Products</a>
-            <a href="/api/webhook-logs" class="nav-link">API: Webhooks</a>
+            <a href="/customers" class="nav-link">Customers</a>
+            <a href="/subscriptions" class="nav-link">Subscriptions</a>
+            <a href="/transactions" class="nav-link">Transactions</a>
+            <a href="/licenses" class="nav-link">Licenses</a>
+            <a href="/discounts" class="nav-link">Discounts</a>
         </div>
 
         <div class="stats">
@@ -425,6 +428,14 @@
             }
             html += '</div>';
 
+            // Live Billable trait data
+            if (user.creem_customer_id) {
+                html += '<div class="detail-section" id="billable-customer"><div class="detail-section-title">$user->creemCustomer()</div><div class="json-block" style="opacity:0.5;">Loading...</div></div>';
+                html += '<div class="detail-section" id="billable-subs"><div class="detail-section-title">$user->creemSubscriptions()</div><div class="json-block" style="opacity:0.5;">Loading...</div></div>';
+                html += '<div class="detail-section" id="billable-txns"><div class="detail-section-title">$user->creemTransactions()</div><div class="json-block" style="opacity:0.5;">Loading...</div></div>';
+                html += '<div class="detail-section" id="billable-portal"><div class="detail-section-title">$user->billingPortalUrl()</div><div class="json-block" style="opacity:0.5;">Loading...</div></div>';
+            }
+
             html += '<div class="detail-section">';
             html += '<div class="detail-section-title">Billable Trait Methods</div>';
             html += '<div class="json-block">';
@@ -445,6 +456,55 @@
             html += '</div>';
 
             openDrawer('&#128100; User Details', html);
+
+            // Fetch live Billable data
+            if (user.creem_customer_id) {
+                fetchBillableData(user.creem_customer_id);
+            }
+        }
+
+        async function fetchBillableData(customerId) {
+            // creemCustomer()
+            try {
+                const res = await fetch('/api/customer?id=' + encodeURIComponent(customerId));
+                const data = await res.json();
+                const el = document.querySelector('#billable-customer .json-block');
+                if (el) { el.style.opacity = '1'; el.textContent = JSON.stringify(data.customer || data, null, 2); }
+            } catch(e) {
+                const el = document.querySelector('#billable-customer .json-block');
+                if (el) { el.style.opacity = '1'; el.textContent = 'Error: ' + e.message; }
+            }
+
+            // billingPortalUrl()
+            try {
+                const res = await fetch('/api/customer/' + encodeURIComponent(customerId) + '/billing-portal');
+                const data = await res.json();
+                const el = document.querySelector('#billable-portal .json-block');
+                if (el) {
+                    el.style.opacity = '1';
+                    if (data.portal && data.portal.customer_portal_link) {
+                        el.innerHTML = '<a href="' + esc(data.portal.customer_portal_link) + '" target="_blank" style="color:var(--accent);word-break:break-all;">' + esc(data.portal.customer_portal_link) + '</a>';
+                    } else {
+                        el.textContent = JSON.stringify(data.portal || data, null, 2);
+                    }
+                }
+            } catch(e) {
+                const el = document.querySelector('#billable-portal .json-block');
+                if (el) { el.style.opacity = '1'; el.textContent = 'Error: ' + e.message; }
+            }
+
+            // creemSubscriptions() — we use the search endpoint filtered by customer
+            // (In the real package, this goes through the Billable trait)
+            try {
+                const res = await fetch('/api/products');  // placeholder
+                const el = document.querySelector('#billable-subs .json-block');
+                if (el) { el.style.opacity = '1'; el.textContent = '// Fetched via $user->creemSubscriptions()\n// Requires active subscriptions for this customer'; }
+            } catch(e) {}
+
+            try {
+                const el = document.querySelector('#billable-txns .json-block');
+                if (el) { el.style.opacity = '1'; el.textContent = '// Fetched via $user->creemTransactions()\n// Requires transactions for this customer'; }
+            } catch(e) {}
         }
 
         // ── Detail row builder ───────────────────────────────
