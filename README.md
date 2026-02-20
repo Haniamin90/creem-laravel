@@ -494,3 +494,7 @@ MIT License. See [LICENSE](LICENSE) for details.
 - [CREEM Documentation](https://docs.creem.io)
 - [CREEM Dashboard](https://creem.io)
 - [API Reference](https://docs.creem.io/api-reference)
+
+## Author
+
+Built by **Hani Amin** — [@HaniAmin90](https://x.com/HaniAmin90) · Discord: `xh90`
