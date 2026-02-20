@@ -426,7 +426,7 @@ Or run directly:
 vendor/bin/phpunit
 ```
 
-The package ships with 76 tests covering:
+The package ships with 78 tests covering:
 - API client HTTP handling & error responses
 - All 24 Facade methods (checkout, products, subscriptions, discounts, etc.)
 - Webhook signature verification

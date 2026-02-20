@@ -86,7 +86,7 @@ This creates 3 subscriptions (Starter $9.99/mo, Pro $29.99/mo, Enterprise $299/y
 | `GET /success` | Post-payment success | `getCheckout()` |
 | `GET /api/*` | Raw JSON endpoints | Various |
 
-### All 26 API Methods Covered
+### All 24 API Methods Covered
 
 - **Products (3)** &mdash; `createProduct`, `getProduct`, `searchProducts`
 - **Checkouts (2)** &mdash; `createCheckout`, `getCheckout`
