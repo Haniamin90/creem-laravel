@@ -55,6 +55,20 @@ Then set your webhook URL in the CREEM dashboard:
 https://your-tunnel-url.com/creem/webhook
 ```
 
+### 5. Seed sample products (optional)
+
+No products yet? Create 4 sample products instantly:
+
+**Option A — UI button:**
+Visit `/products` and click the **⚡ Create Sample Products** button.
+
+**Option B — CLI script:**
+```bash
+docker compose exec app php seed-products.php
+```
+
+This creates 3 subscriptions (Starter $9.99/mo, Pro $29.99/mo, Enterprise $299/yr) and 1 one-time product (Lifetime License $99) via `Creem::createProduct()`.
+
 ## What's Inside
 
 ### Pages
@@ -64,18 +78,20 @@ https://your-tunnel-url.com/creem/webhook
 | `GET /` | Dashboard with webhook events, users, and environment info |
 | `GET /products` | Product listing fetched live from CREEM API |
 | `POST /checkout` | Creates a checkout session via the Billable trait |
+| `POST /seed-products` | Creates 4 sample products via the API |
 | `GET /success` | Post-payment success page |
 | `GET /api/products` | Raw JSON product listing |
 | `GET /api/webhook-logs` | Raw JSON webhook event log |
 
 ### Package Features Demonstrated
 
-- **Facade** &mdash; `Creem::searchProducts()`, `Creem::client()`
+- **Facade** &mdash; `Creem::searchProducts()`, `Creem::createProduct()`, `Creem::client()`
 - **Billable Trait** &mdash; `$user->checkout($productId, $params)`
 - **Webhook Handling** &mdash; Auto-registered at `POST /creem/webhook`
 - **Event Listeners** &mdash; `CreemWebhookReceived`, `AccessGranted`, `AccessRevoked`
 - **Exception Handling** &mdash; `CreemApiException` with trace IDs
 - **Sandbox Detection** &mdash; Auto-detects `creem_test_` prefix
+- **Product Seeding** &mdash; One-click sample product creation via API
 
 ### Architecture
 
@@ -99,6 +115,6 @@ app/
 |-------|----------|
 | Container won't start | Run `docker compose logs -f` to check errors |
 | `APP_KEY` missing | Generate one (see step 2 above) |
-| No products shown | Create products in your [CREEM dashboard](https://creem.io/dashboard) |
+| No products shown | Click **⚡ Create Sample Products** on the products page, or run `php seed-products.php` |
 | No webhook events | Ensure your webhook URL is publicly accessible |
 | 419 CSRF error | Normal for API calls; the web forms include CSRF tokens automatically |

@@ -396,10 +396,11 @@ try {
 
 A fully functional Docker-based demo app is included in [`examples/demo/`](examples/demo/). It demonstrates:
 
-- Facade API calls (`Creem::searchProducts()`)
+- Facade API calls (`Creem::searchProducts()`, `Creem::createProduct()`)
 - Billable trait (`$user->checkout()`)
 - Webhook event handling with live dashboard
 - Sandbox/production auto-detection
+- One-click sample product seeding via API
 
 ```bash
 cd examples/demo
@@ -407,6 +408,12 @@ cp .env.example .env
 # Add your CREEM API key and webhook secret to .env
 docker compose up -d --build
 # Visit http://localhost:8000
+```
+
+No products yet? Click **⚡ Create Sample Products** on the products page or run:
+
+```bash
+docker compose exec app php seed-products.php
 ```
 
 See the [demo README](examples/demo/README.md) for full setup instructions.

@@ -56,8 +56,13 @@
         .btn:hover { background: #6a4ae8; box-shadow: 0 4px 20px var(--accent-glow); transform: translateY(-1px); }
         .btn:active { transform: translateY(0); }
         .empty-card { background: var(--surface); border: 1px dashed var(--border-bright); border-radius: 20px; padding: 60px 20px; text-align: center; }
-        .empty-card p { color: var(--text-muted); font-size: 0.88rem; }
+        .empty-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; }
         .empty-card a { color: var(--accent); text-decoration: none; }
+        .success-box { background: rgba(52,211,153,0.08); border: 1px solid rgba(52,211,153,0.2); border-radius: 12px; padding: 16px 20px; color: var(--green); font-size: 0.88rem; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+        .btn-seed { padding: 10px 24px; background: rgba(52,211,153,0.12); color: var(--green); border: 1px solid rgba(52,211,153,0.2); border-radius: 10px; font-family: 'Inter',sans-serif; font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-seed:hover { background: rgba(52,211,153,0.2); border-color: rgba(52,211,153,0.35); transform: translateY(-1px); }
+        .btn-seed:active { transform: translateY(0); }
+        .seed-hint { font-family: var(--mono); font-size: 0.72rem; color: var(--text-muted); margin-top: 16px; }
         .footer { margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); text-align: center; color: var(--text-muted); font-size: 0.78rem; }
         .footer a { color: var(--accent); text-decoration: none; }
         @media (max-width: 640px) { .container { padding: 24px 16px; } .products-grid { grid-template-columns: 1fr; } .price-amount { font-size: 2rem; } }
@@ -74,6 +79,10 @@
             <a href="/" class="nav-link">&larr; Dashboard</a>
             <a href="/products" class="nav-active">Products</a>
         </div>
+
+        @if(session('success'))
+            <div class="success-box">{{ session('success') }}</div>
+        @endif
 
         @if($error ?? false)
             <div class="error-box">{{ $error }}</div>
@@ -118,7 +127,15 @@
             </div>
         @else
             <div class="empty-card">
-                <p>No products found.<br>Create some in your <a href="https://creem.io/dashboard">CREEM dashboard</a> first.</p>
+                <p>No products found in your CREEM account.</p>
+                <p style="margin-top: 16px;">
+                    <form method="POST" action="/seed-products" style="display:inline;">
+                        @csrf
+                        <button type="submit" class="btn-seed">&#9889; Create Sample Products</button>
+                    </form>
+                </p>
+                <p class="seed-hint">Creates 4 products via Creem::createProduct() &mdash; 3 subscriptions + 1 one-time</p>
+                <p style="margin-top: 12px;"><span class="text-muted" style="font-size:0.82rem;">Or create them manually in your <a href="https://creem.io/dashboard">CREEM dashboard</a></span></p>
             </div>
         @endif
 
