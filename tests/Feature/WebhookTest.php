@@ -137,11 +137,35 @@ class WebhookTest extends TestCase
     {
         Event::fake([CreemWebhookReceived::class]);
 
-        $this->sendWebhook('some.unknown.event', ['id' => 'test']);
+        $this->sendWebhook('dispute.created', ['id' => 'test']);
 
         Event::assertDispatched(CreemWebhookReceived::class, function ($event) {
-            return $event->eventType === 'some.unknown.event';
+            return $event->eventType === 'dispute.created';
         });
+    }
+
+    public function test_webhook_rejects_unknown_event_type(): void
+    {
+        $payload = json_encode([
+            'eventType' => 'some.unknown.event',
+            'object' => ['id' => 'test'],
+            'timestamp' => now()->toISOString(),
+        ]);
+
+        $secret = config('creem.webhook_secret');
+        $signature = hash_hmac('sha256', $payload, $secret);
+
+        $response = $this->postJson(
+            route('creem.webhook'),
+            json_decode($payload, true),
+            [
+                'creem-signature' => $signature,
+                'Content-Type' => 'application/json',
+            ]
+        );
+
+        $response->assertStatus(400);
+        $response->assertJson(['error' => 'Unknown eventType']);
     }
 
     public function test_access_granted_event_on_checkout_completed(): void

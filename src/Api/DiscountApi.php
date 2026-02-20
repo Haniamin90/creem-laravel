@@ -51,9 +51,15 @@ class DiscountApi
      *
      * @param  string  $discountId  The discount ID.
      * @return array<string, mixed>
+     *
+     * @throws \InvalidArgumentException
      */
     public function delete(string $discountId): array
     {
+        if (! preg_match('/^[a-zA-Z0-9_-]+$/', $discountId)) {
+            throw new \InvalidArgumentException('Invalid discount ID format.');
+        }
+
         return $this->client->delete("v1/discounts/{$discountId}/delete");
     }
 }

@@ -10,6 +10,15 @@ class CommandTest extends TestCase
     {
         $this->artisan('creem:webhook-secret', ['--show' => true])
             ->expectsOutput('Current CREEM webhook secret:')
+            ->expectsOutput('test_w..._123')
+            ->expectsOutput('(Use --show --plain to display the full secret)')
+            ->assertExitCode(0);
+    }
+
+    public function test_webhook_secret_show_plain_with_configured_secret(): void
+    {
+        $this->artisan('creem:webhook-secret', ['--show' => true, '--plain' => true])
+            ->expectsOutput('Current CREEM webhook secret:')
             ->expectsOutput('test_webhook_secret_123')
             ->assertExitCode(0);
     }

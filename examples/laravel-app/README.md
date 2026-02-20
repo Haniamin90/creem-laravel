@@ -120,8 +120,9 @@ $user->resumeSubscription('sub_...');
 ```bash
 # Generate and store a webhook signing secret
 php artisan creem:webhook-secret
-php artisan creem:webhook-secret --show     # Display current
-php artisan creem:webhook-secret --force    # Overwrite existing
+php artisan creem:webhook-secret --show          # Display current (masked)
+php artisan creem:webhook-secret --show --plain  # Display full secret
+php artisan creem:webhook-secret --force         # Overwrite existing
 
 # Sync and display products from CREEM
 php artisan creem:sync-products

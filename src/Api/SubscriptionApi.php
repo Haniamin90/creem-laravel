@@ -14,6 +14,18 @@ class SubscriptionApi
     }
 
     /**
+     * Validate that a resource ID contains only safe characters.
+     *
+     * @throws \InvalidArgumentException
+     */
+    protected function validateId(string $id, string $label = 'ID'): void
+    {
+        if (! preg_match('/^[a-zA-Z0-9_-]+$/', $id)) {
+            throw new \InvalidArgumentException("Invalid {$label} format.");
+        }
+    }
+
+    /**
      * Retrieve a subscription by ID.
      *
      * @param  string  $subscriptionId  The subscription ID.
@@ -44,6 +56,8 @@ class SubscriptionApi
      */
     public function update(string $subscriptionId, array $params): array
     {
+        $this->validateId($subscriptionId, 'subscription ID');
+
         return $this->client->post("v1/subscriptions/{$subscriptionId}", $params);
     }
 
@@ -56,6 +70,8 @@ class SubscriptionApi
      */
     public function upgrade(string $subscriptionId, string $newProductId): array
     {
+        $this->validateId($subscriptionId, 'subscription ID');
+
         return $this->client->post("v1/subscriptions/{$subscriptionId}/upgrade", [
             'product_id' => $newProductId,
         ]);
@@ -70,6 +86,8 @@ class SubscriptionApi
      */
     public function cancel(string $subscriptionId, string $mode = 'scheduled'): array
     {
+        $this->validateId($subscriptionId, 'subscription ID');
+
         return $this->client->post("v1/subscriptions/{$subscriptionId}/cancel", [
             'mode' => $mode,
         ]);
@@ -83,6 +101,8 @@ class SubscriptionApi
      */
     public function pause(string $subscriptionId): array
     {
+        $this->validateId($subscriptionId, 'subscription ID');
+
         return $this->client->post("v1/subscriptions/{$subscriptionId}/pause");
     }
 
@@ -94,6 +114,8 @@ class SubscriptionApi
      */
     public function resume(string $subscriptionId): array
     {
+        $this->validateId($subscriptionId, 'subscription ID');
+
         return $this->client->post("v1/subscriptions/{$subscriptionId}/resume");
     }
 }

@@ -26,6 +26,10 @@ class CreemClient
         $this->apiKey = $apiKey;
         $this->baseUrl = $baseUrl ?: $this->resolveBaseUrl($apiKey);
 
+        if (! str_starts_with($this->baseUrl, 'https://')) {
+            throw new \InvalidArgumentException('CREEM API base URL must use HTTPS.');
+        }
+
         $this->http = new Client([
             'base_uri' => rtrim($this->baseUrl, '/').'/',
             'headers' => [
@@ -133,13 +137,13 @@ class CreemClient
             $this->handleClientException($e);
         } catch (GuzzleException $e) {
             throw new CreemApiException(
-                "CREEM API request failed: {$e->getMessage()}",
+                'CREEM API request failed.',
                 $e->getCode(),
                 $e
             );
         } catch (\JsonException $e) {
             throw new CreemApiException(
-                "Failed to decode CREEM API response: {$e->getMessage()}",
+                'Failed to decode CREEM API response.',
                 0,
                 $e
             );

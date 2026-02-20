@@ -54,12 +54,12 @@ trait Billable
         if ($this->hasCreemCustomerId()) {
             $params['metadata'] = array_merge($params['metadata'] ?? [], [
                 'creem_customer_id' => $this->creem_customer_id,
-                'model_type' => get_class($this),
+                'model_type' => class_basename($this),
                 'model_id' => $this->getKey(),
             ]);
         } else {
             $params['metadata'] = array_merge($params['metadata'] ?? [], [
-                'model_type' => get_class($this),
+                'model_type' => class_basename($this),
                 'model_id' => $this->getKey(),
             ]);
         }

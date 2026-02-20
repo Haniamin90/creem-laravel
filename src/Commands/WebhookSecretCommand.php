@@ -13,7 +13,8 @@ class WebhookSecretCommand extends Command
      * @var string
      */
     protected $signature = 'creem:webhook-secret
-                            {--show : Display the current webhook secret}
+                            {--show : Display the current webhook secret (masked)}
+                            {--plain : Show the full unmasked secret (use with --show)}
                             {--force : Overwrite an existing webhook secret}';
 
     /**
@@ -50,7 +51,14 @@ class WebhookSecretCommand extends Command
         }
 
         $this->info('Current CREEM webhook secret:');
-        $this->line($secret);
+
+        if ($this->option('plain')) {
+            $this->line($secret);
+        } else {
+            $masked = substr($secret, 0, 6).'...'.substr($secret, -4);
+            $this->line($masked);
+            $this->line('(Use --show --plain to display the full secret)');
+        }
 
         return self::SUCCESS;
     }
@@ -101,7 +109,7 @@ class WebhookSecretCommand extends Command
 
         if (str_contains($content, "{$key}=")) {
             $content = preg_replace(
-                "/^{$key}=.*/m",
+                '/^'.preg_quote($key, '/').'=.*/m',
                 "{$key}={$value}",
                 $content
             );

@@ -57,13 +57,18 @@ class CreemServiceProvider extends ServiceProvider
 
     /**
      * Register the webhook route.
+     *
+     * Uses the 'api' middleware group to avoid CSRF verification,
+     * and adds rate limiting to prevent abuse.
      */
     protected function registerRoutes(): void
     {
-        Route::post(
-            config('creem.webhook_path', 'creem/webhook'),
-            [Http\Controllers\WebhookController::class, 'handle']
-        )->middleware(VerifyCreemWebhook::class)
+        Route::middleware('api')
+            ->post(
+                config('creem.webhook_path', 'creem/webhook'),
+                [Http\Controllers\WebhookController::class, 'handle']
+            )
+            ->middleware([VerifyCreemWebhook::class, 'throttle:120,1'])
             ->name('creem.webhook');
     }
 

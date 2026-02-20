@@ -56,6 +56,10 @@ class WebhookController extends Controller
             return response()->json(['error' => 'Missing eventType'], 400);
         }
 
+        if (! in_array($eventType, WebhookEventType::ALL, true)) {
+            return response()->json(['error' => 'Unknown eventType'], 400);
+        }
+
         // Dispatch the generic webhook event
         CreemWebhookReceived::dispatch($eventType, $payload);
 

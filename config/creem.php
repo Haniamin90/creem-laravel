@@ -69,6 +69,9 @@ return [
     | The Eloquent model that represents your application's users.
     | This model should use the Billable trait.
     |
+    | WARNING: Do not use this value for dynamic class instantiation without
+    | validating it against an allowlist first.
+    |
     */
 
     'customer_model' => env('CREEM_CUSTOMER_MODEL', 'App\\Models\\User'),
