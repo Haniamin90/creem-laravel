@@ -247,7 +247,7 @@
         </div>
 
         <div class="footer">
-            Built with <a href="https://github.com/creem-laravel/creem-laravel">creem/laravel</a> &middot; 73 tests &middot; 15 events &middot; 26 API methods
+            Built with <a href="https://github.com/Haniamin90/creem-laravel">creem/laravel</a> &middot; 73 tests &middot; 15 events &middot; 26 API methods
         </div>
     </div>
 

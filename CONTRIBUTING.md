@@ -6,7 +6,7 @@ Thank you for considering contributing to the CREEM Laravel package! This docume
 
 1. **Fork and clone** the repository:
    ```bash
-   git clone https://github.com/your-username/creem-laravel.git
+   git clone https://github.com/Haniamin90/creem-laravel.git
    cd creem-laravel
    ```
 
@@ -99,7 +99,7 @@ tests/
 
 ## Reporting Issues
 
-- Use [GitHub Issues](https://github.com/creem-laravel/creem-laravel/issues) for bug reports and feature requests.
+- Use [GitHub Issues](https://github.com/Haniamin90/creem-laravel/issues) for bug reports and feature requests.
 - Include your PHP version, Laravel version, and package version.
 - For bugs, include steps to reproduce and the expected vs actual behavior.
 

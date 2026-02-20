@@ -2,7 +2,8 @@
 
 The official Laravel package for [CREEM](https://creem.io) — accept payments globally with automatic tax handling, subscription management, and license key distribution.
 
-[![Tests](https://img.shields.io/badge/tests-73%20passing-brightgreen)](../../actions)
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/creem/laravel.svg)](https://packagist.org/packages/creem/laravel)
+[![Tests](https://github.com/Haniamin90/creem-laravel/actions/workflows/tests.yml/badge.svg)](https://github.com/Haniamin90/creem-laravel/actions/workflows/tests.yml)
 [![PHP](https://img.shields.io/badge/php-%3E%3D8.1-8892BF)](composer.json)
 [![Laravel](https://img.shields.io/badge/laravel-10%2B-FF2D20)](composer.json)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
