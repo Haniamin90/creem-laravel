@@ -392,6 +392,8 @@ try {
 
 ## Demo App
 
+> **Live Demo:** [https://creem.h90.space](https://creem.h90.space) — see the package in action with real CREEM API integration.
+
 A fully functional Docker-based demo app is included in [`examples/demo/`](examples/demo/). It demonstrates:
 
 - Facade API calls (`Creem::searchProducts()`)
