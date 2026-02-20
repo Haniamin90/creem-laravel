@@ -19,26 +19,20 @@ class VerifyCreemWebhook
         $secret = config('creem.webhook_secret');
 
         if (empty($secret)) {
-            throw new WebhookVerificationException(
-                'CREEM webhook secret is not configured. Set CREEM_WEBHOOK_SECRET in your .env file.'
-            );
+            abort(403, 'CREEM webhook secret is not configured.');
         }
 
         $signature = $request->header('creem-signature');
 
         if (empty($signature)) {
-            throw new WebhookVerificationException(
-                'Missing creem-signature header.'
-            );
+            abort(403, 'Missing creem-signature header.');
         }
 
         $payload = $request->getContent();
         $expectedSignature = hash_hmac('sha256', $payload, $secret);
 
         if (! hash_equals($expectedSignature, $signature)) {
-            throw new WebhookVerificationException(
-                'Invalid webhook signature.'
-            );
+            abort(403, 'Invalid webhook signature.');
         }
 
         return $next($request);

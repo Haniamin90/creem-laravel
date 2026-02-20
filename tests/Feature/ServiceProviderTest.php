@@ -33,7 +33,6 @@ class ServiceProviderTest extends TestCase
     public function test_default_config_values(): void
     {
         $this->assertEquals('creem/webhook', config('creem.webhook_path'));
-        $this->assertEquals(300, config('creem.webhook_tolerance'));
         $this->assertEquals('USD', config('creem.currency'));
         $this->assertEquals('App\\Models\\User', config('creem.customer_model'));
     }

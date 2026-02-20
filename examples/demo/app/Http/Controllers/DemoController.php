@@ -408,7 +408,7 @@ class DemoController extends Controller
     {
         return view('discounts', [
             'result' => session('discount_result'),
-            'error' => null,
+            'error' => session('error'),
         ]);
     }
 
@@ -496,7 +496,7 @@ class DemoController extends Controller
                 'name' => 'Starter Plan',
                 'description' => 'Perfect for individuals and small projects. Includes core features and email support.',
                 'price' => 999,
-                'currency' => 'usd',
+                'currency' => 'USD',
                 'billing_type' => 'recurring',
                 'billing_period' => 'every-month',
             ],
@@ -504,7 +504,7 @@ class DemoController extends Controller
                 'name' => 'Pro Plan',
                 'description' => 'For growing teams. Unlimited projects, priority support, and advanced analytics.',
                 'price' => 2999,
-                'currency' => 'usd',
+                'currency' => 'USD',
                 'billing_type' => 'recurring',
                 'billing_period' => 'every-month',
             ],
@@ -512,7 +512,7 @@ class DemoController extends Controller
                 'name' => 'Enterprise Annual',
                 'description' => 'Best value — annual billing with 2 months free. Everything in Pro plus custom integrations.',
                 'price' => 29900,
-                'currency' => 'usd',
+                'currency' => 'USD',
                 'billing_type' => 'recurring',
                 'billing_period' => 'every-year',
             ],
@@ -520,7 +520,7 @@ class DemoController extends Controller
                 'name' => 'Lifetime License',
                 'description' => 'One-time purchase. Lifetime access to all current and future features. No recurring fees.',
                 'price' => 9900,
-                'currency' => 'usd',
+                'currency' => 'USD',
                 'billing_type' => 'onetime',
             ],
         ];

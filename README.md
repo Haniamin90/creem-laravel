@@ -10,10 +10,10 @@ The official Laravel package for [CREEM](https://creem.io) — accept payments g
 
 ## Features
 
-- **Facade API** — `Creem::createCheckout()`, `Creem::getProduct()`, and 24 more methods
+- **Facade API** — `Creem::createCheckout()`, `Creem::getProduct()`, and 24 methods total
 - **Webhook handling** — Automatic signature verification with typed Laravel events
 - **Billable trait** — Add checkout, subscription, and billing portal to any Eloquent model
-- **Artisan commands** — `creem:webhook-secret`, `creem:sync-products`
+- **Artisan commands** — `creem:webhook-secret`, `creem:list-products`
 - **Full API coverage** — Products, Checkouts, Subscriptions, Customers, Transactions, Licenses, Discounts
 - **Auto sandbox detection** — Automatically routes to sandbox API when using test keys
 - **Laravel 10, 11 & 12** support with PHP 8.1+
@@ -133,7 +133,7 @@ Creem::searchProducts(['limit' => 10]);
 
 ```php
 // Get customer by ID or email
-Creem::getCustomer(['customer_id' => 'cus_123']);
+Creem::getCustomer(['id' => 'cus_123']);
 Creem::getCustomer(['email' => 'user@example.com']);
 
 // List all customers
@@ -172,8 +172,8 @@ Creem::resumeSubscription('sub_123');
 ```php
 Creem::getTransaction('txn_123');
 Creem::searchTransactions([
-    'customer_id' => 'cus_123',
-    'page_size' => 20,
+    'customer' => 'cus_123',
+    'limit' => 20,
 ]);
 ```
 
@@ -339,14 +339,11 @@ php artisan creem:webhook-secret --show
 php artisan creem:webhook-secret --force
 ```
 
-### Sync Products
+### List Products
 
 ```bash
 # List all products from your CREEM account
-php artisan creem:sync-products
-
-# Limit the number of products fetched
-php artisan creem:sync-products --limit=50
+php artisan creem:list-products
 ```
 
 ## Configuration
@@ -359,7 +356,6 @@ The config file (`config/creem.php`) supports these options:
 | `webhook_secret` | `CREEM_WEBHOOK_SECRET` | `''` | Webhook signing secret |
 | `api_url` | `CREEM_API_URL` | Auto-detected | Override the API base URL |
 | `webhook_path` | `CREEM_WEBHOOK_PATH` | `creem/webhook` | Webhook route path |
-| `webhook_tolerance` | `CREEM_WEBHOOK_TOLERANCE` | `300` | Max webhook age in seconds |
 | `currency` | `CREEM_CURRENCY` | `USD` | Default currency |
 | `customer_model` | `CREEM_CUSTOMER_MODEL` | `App\Models\User` | Billable model class |
 
@@ -381,9 +377,9 @@ use Creem\Laravel\Exceptions\CreemRateLimitException;
 try {
     $product = Creem::getProduct('prod_123');
 } catch (CreemAuthenticationException $e) {
-    // Invalid API key (403)
+    // Missing or invalid API key (401/403)
 } catch (CreemRateLimitException $e) {
-    // Rate limited (429) - retry later
+    // Rate limited (429) - check $e->getRetryAfter() for seconds to wait
 } catch (CreemApiException $e) {
     // Other API errors (400, 404, 500, etc.)
     $traceId = $e->getTraceId(); // For CREEM support debugging
@@ -430,9 +426,9 @@ Or run directly:
 vendor/bin/phpunit
 ```
 
-The package ships with 73 tests covering:
+The package ships with 76 tests covering:
 - API client HTTP handling & error responses
-- All 24 Facade methods (checkout, products, subscriptions, etc.)
+- All 24 Facade methods (checkout, products, subscriptions, discounts, etc.)
 - Webhook signature verification
 - Event dispatching for all 12 webhook types + AccessGranted/AccessRevoked
 - Service provider bindings & configuration

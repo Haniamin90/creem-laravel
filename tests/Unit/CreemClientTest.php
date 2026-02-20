@@ -174,4 +174,55 @@ class CreemClientTest extends TestCase
             $this->assertEquals('trace_auth_123', $e->getTraceId());
         }
     }
+
+    public function test_throws_authentication_exception_on_401(): void
+    {
+        $client = $this->createClientWithMock([
+            new Response(401, [], json_encode([
+                'error' => 'Unauthorized',
+                'message' => 'Missing API key',
+            ])),
+        ]);
+
+        $this->expectException(CreemAuthenticationException::class);
+        $this->expectExceptionMessage('Missing API key');
+        $this->expectExceptionCode(401);
+
+        $client->get('v1/products');
+    }
+
+    public function test_rate_limit_exception_includes_retry_after(): void
+    {
+        $client = $this->createClientWithMock([
+            new Response(429, ['Retry-After' => '30'], json_encode([
+                'error' => 'Too Many Requests',
+                'message' => 'Rate limit exceeded',
+            ])),
+        ]);
+
+        try {
+            $client->get('v1/products');
+            $this->fail('Expected CreemRateLimitException');
+        } catch (CreemRateLimitException $e) {
+            $this->assertEquals(30, $e->getRetryAfter());
+            $this->assertEquals(429, $e->getCode());
+        }
+    }
+
+    public function test_rate_limit_exception_without_retry_after_header(): void
+    {
+        $client = $this->createClientWithMock([
+            new Response(429, [], json_encode([
+                'error' => 'Too Many Requests',
+                'message' => 'Rate limit exceeded',
+            ])),
+        ]);
+
+        try {
+            $client->get('v1/products');
+            $this->fail('Expected CreemRateLimitException');
+        } catch (CreemRateLimitException $e) {
+            $this->assertNull($e->getRetryAfter());
+        }
+    }
 }

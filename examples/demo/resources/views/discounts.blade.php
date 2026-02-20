@@ -76,8 +76,8 @@
             <a href="/discounts" class="nav-active">Discounts</a>
         </div>
 
-        @if(session('error'))
-            <div class="error-box">{{ session('error') }}</div>
+        @if($error)
+            <div class="error-box">{{ $error }}</div>
         @endif
 
         @if($result)

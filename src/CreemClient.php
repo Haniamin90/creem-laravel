@@ -164,9 +164,16 @@ class CreemClient
 
         $traceId = $body['trace_id'] ?? null;
 
+        if ($statusCode === 429) {
+            $retryAfter = $response->hasHeader('Retry-After')
+                ? (int) $response->getHeaderLine('Retry-After')
+                : null;
+
+            throw new CreemRateLimitException($message, $statusCode, $e, $traceId, $retryAfter);
+        }
+
         match ($statusCode) {
-            403 => throw new CreemAuthenticationException($message, $statusCode, $e, $traceId),
-            429 => throw new CreemRateLimitException($message, $statusCode, $e, $traceId),
+            401, 403 => throw new CreemAuthenticationException($message, $statusCode, $e, $traceId),
             default => throw new CreemApiException($message, $statusCode, $e, $traceId),
         };
     }

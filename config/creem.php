@@ -52,18 +52,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Webhook Tolerance
-    |--------------------------------------------------------------------------
-    |
-    | Maximum time difference (in seconds) between the webhook timestamp
-    | and current time before the webhook is considered stale.
-    |
-    */
-
-    'webhook_tolerance' => env('CREEM_WEBHOOK_TOLERANCE', 300),
-
-    /*
-    |--------------------------------------------------------------------------
     | Currency
     |--------------------------------------------------------------------------
     |

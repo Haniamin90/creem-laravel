@@ -45,6 +45,12 @@ final class WebhookEventType
     /**
      * Events that indicate the user's access should be revoked.
      *
+     * Note: subscription.past_due, subscription.paused, and subscription.scheduled_cancel
+     * are intentionally excluded. Past-due subscriptions may still recover via retry,
+     * paused subscriptions retain access by design, and scheduled cancellations preserve
+     * access until the billing period ends. Listen for these specific events if you need
+     * custom handling (e.g. showing a grace-period banner).
+     *
      * @var string[]
      */
     public const REVOKE_ACCESS = [

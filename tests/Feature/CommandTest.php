@@ -30,11 +30,11 @@ class CommandTest extends TestCase
             ->assertExitCode(1);
     }
 
-    public function test_sync_products_command_is_registered(): void
+    public function test_list_products_command_is_registered(): void
     {
         $this->assertTrue(
             $this->app['Illuminate\Contracts\Console\Kernel']
-                ->all()['creem:sync-products'] !== null
+                ->all()['creem:list-products'] !== null
         );
     }
 

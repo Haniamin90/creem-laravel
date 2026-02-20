@@ -13,21 +13,21 @@ class SyncProductsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'creem:sync-products';
+    protected $signature = 'creem:list-products';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Sync products from CREEM to your local database';
+    protected $description = 'List all products from your CREEM account';
 
     /**
      * Execute the console command.
      */
     public function handle(Creem $creem): int
     {
-        $this->info('Syncing products from CREEM...');
+        $this->info('Fetching products from CREEM...');
 
         try {
             $response = $creem->searchProducts();
@@ -54,12 +54,12 @@ class SyncProductsCommand extends Command
 
             $this->info(count($products).' product(s) found.');
 
-            // Dispatch event for custom sync handling
-            event('creem.products.synced', [$products]);
+            // Dispatch event for custom handling
+            event('creem.products.listed', [$products]);
 
             return self::SUCCESS;
         } catch (CreemApiException $e) {
-            $this->error("Failed to sync products: {$e->getMessage()}");
+            $this->error("Failed to fetch products: {$e->getMessage()}");
 
             if ($traceId = $e->getTraceId()) {
                 $this->line("Trace ID: {$traceId}");

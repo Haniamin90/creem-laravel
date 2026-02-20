@@ -17,7 +17,7 @@ class CustomerApi
      * Retrieve a customer by ID or email.
      *
      * @param  array<string, mixed>  $params  Query parameters:
-     *                                        - customer_id (string): Customer ID.
+     *                                        - id (string): Customer ID.
      *                                        - email (string): Customer email address.
      * @return array<string, mixed>
      */

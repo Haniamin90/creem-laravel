@@ -64,7 +64,7 @@ class WebhookTest extends TestCase
             ]
         );
 
-        $response->assertStatus(500);
+        $response->assertStatus(403);
     }
 
     public function test_webhook_rejects_missing_signature(): void
@@ -74,7 +74,7 @@ class WebhookTest extends TestCase
             ['eventType' => 'checkout.completed', 'object' => []]
         );
 
-        $response->assertStatus(500);
+        $response->assertStatus(403);
     }
 
     public function test_checkout_completed_event_is_dispatched(): void
