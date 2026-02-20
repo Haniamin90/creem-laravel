@@ -61,7 +61,7 @@ echo str_repeat('=', 40)."\n\n";
 
 $mode = Creem::client()->isSandbox() ? 'SANDBOX' : 'PRODUCTION';
 echo "Mode: {$mode}\n";
-echo "API:  ".Creem::client()->getBaseUrl()."\n\n";
+echo 'API:  '.Creem::client()->getBaseUrl()."\n\n";
 
 $created = 0;
 $failed = 0;
