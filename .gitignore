@@ -1,0 +1,11 @@
+/vendor/
+/node_modules/
+/.phpunit.cache/
+/coverage/
+composer.lock
+.env
+.phpunit.result.cache
+*.zip
+
+# Private docker-app (local testing only — not published)
+/examples/docker-app/

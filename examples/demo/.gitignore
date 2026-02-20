@@ -1,0 +1,10 @@
+/vendor/
+*.sqlite
+.env
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/framework/cache/data/*
+/storage/logs/*.log
+/bootstrap/cache/packages.php
+/bootstrap/cache/services.php
+!.gitkeep

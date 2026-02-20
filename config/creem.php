@@ -1,0 +1,88 @@
+<?php
+
+return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | CREEM API Key
+    |--------------------------------------------------------------------------
+    |
+    | Your CREEM API key. Use creem_test_ prefix for sandbox mode
+    | and creem_ prefix for production.
+    |
+    */
+
+    'api_key' => env('CREEM_API_KEY', ''),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Webhook Secret
+    |--------------------------------------------------------------------------
+    |
+    | Your CREEM webhook signing secret used to verify incoming webhooks.
+    | Found in your CREEM dashboard under Developers > Webhook.
+    |
+    */
+
+    'webhook_secret' => env('CREEM_WEBHOOK_SECRET', ''),
+
+    /*
+    |--------------------------------------------------------------------------
+    | API Base URL
+    |--------------------------------------------------------------------------
+    |
+    | The base URL for the CREEM API. This is automatically determined
+    | based on your API key prefix, but can be overridden here.
+    |
+    */
+
+    'api_url' => env('CREEM_API_URL', ''),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Webhook Path
+    |--------------------------------------------------------------------------
+    |
+    | The URI path where CREEM webhooks should be received. This will be
+    | registered automatically when the package routes are loaded.
+    |
+    */
+
+    'webhook_path' => env('CREEM_WEBHOOK_PATH', 'creem/webhook'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Webhook Tolerance
+    |--------------------------------------------------------------------------
+    |
+    | Maximum time difference (in seconds) between the webhook timestamp
+    | and current time before the webhook is considered stale.
+    |
+    */
+
+    'webhook_tolerance' => env('CREEM_WEBHOOK_TOLERANCE', 300),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Currency
+    |--------------------------------------------------------------------------
+    |
+    | The default currency for new products and checkouts.
+    |
+    */
+
+    'currency' => env('CREEM_CURRENCY', 'USD'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Customer Model
+    |--------------------------------------------------------------------------
+    |
+    | The Eloquent model that represents your application's users.
+    | This model should use the Billable trait.
+    |
+    */
+
+    'customer_model' => env('CREEM_CUSTOMER_MODEL', 'App\\Models\\User'),
+
+];

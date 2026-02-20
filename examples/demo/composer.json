@@ -1,0 +1,33 @@
+{
+    "name": "creem/laravel-demo",
+    "type": "project",
+    "description": "Demo app for creem/laravel package",
+    "require": {
+        "php": "^8.1",
+        "laravel/framework": "^12.0",
+        "creem/laravel": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/package",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true,
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}
