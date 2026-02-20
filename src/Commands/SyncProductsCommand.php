@@ -13,8 +13,7 @@ class SyncProductsCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'creem:sync-products
-                            {--limit=100 : Number of products to fetch}';
+    protected $signature = 'creem:sync-products';
 
     /**
      * The console command description.
@@ -31,9 +30,7 @@ class SyncProductsCommand extends Command
         $this->info('Syncing products from CREEM...');
 
         try {
-            $response = $creem->searchProducts([
-                'limit' => (int) $this->option('limit'),
-            ]);
+            $response = $creem->searchProducts();
 
             $products = $response['items'] ?? [];
 
