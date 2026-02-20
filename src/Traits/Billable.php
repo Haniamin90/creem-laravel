@@ -91,7 +91,7 @@ trait Billable
     public function creemCustomer(): array
     {
         if ($this->hasCreemCustomerId()) {
-            return Creem::getCustomer(['id' => $this->creem_customer_id]);
+            return Creem::getCustomer(['customer_id' => $this->creem_customer_id]);
         }
 
         return Creem::getCustomer(['email' => $this->email]);

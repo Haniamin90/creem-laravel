@@ -466,7 +466,7 @@
         async function fetchBillableData(customerId) {
             // creemCustomer()
             try {
-                const res = await fetch('/api/customer?id=' + encodeURIComponent(customerId));
+                const res = await fetch('/api/customer?customer_id=' + encodeURIComponent(customerId));
                 const data = await res.json();
                 const el = document.querySelector('#billable-customer .json-block');
                 if (el) { el.style.opacity = '1'; el.textContent = JSON.stringify(data.customer || data, null, 2); }

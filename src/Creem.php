@@ -98,7 +98,7 @@ class Creem
     /**
      * Retrieve a customer by ID or email.
      *
-     * @param  array<string, mixed>  $params  Query parameters (id or email).
+     * @param  array<string, mixed>  $params  Query parameters (customer_id or email).
      * @return array<string, mixed>
      */
     public function getCustomer(array $params): array

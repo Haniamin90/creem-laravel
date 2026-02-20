@@ -145,8 +145,8 @@ class DemoController extends Controller
     {
         try {
             $params = [];
-            if ($request->query('id')) {
-                $params['id'] = $request->query('id');
+            if ($request->query('customer_id')) {
+                $params['customer_id'] = $request->query('customer_id');
             } elseif ($request->query('email')) {
                 $params['email'] = $request->query('email');
             }
