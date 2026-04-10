@@ -5,7 +5,7 @@ The official Laravel package for [CREEM](https://creem.io) — accept payments g
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/creem/laravel.svg)](https://packagist.org/packages/creem/laravel)
 [![Tests](https://github.com/Haniamin90/creem-laravel/actions/workflows/tests.yml/badge.svg)](https://github.com/Haniamin90/creem-laravel/actions/workflows/tests.yml)
 [![PHP](https://img.shields.io/badge/php-%3E%3D8.1-8892BF)](composer.json)
-[![Laravel](https://img.shields.io/badge/laravel-10%2B-FF2D20)](composer.json)
+[![Laravel](https://img.shields.io/badge/laravel-10--13-FF2D20)](composer.json)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
 ## Features
@@ -16,7 +16,7 @@ The official Laravel package for [CREEM](https://creem.io) — accept payments g
 - **Artisan commands** — `creem:webhook-secret`, `creem:list-products`
 - **Full API coverage** — Products, Checkouts, Subscriptions, Customers, Transactions, Licenses, Discounts
 - **Auto sandbox detection** — Automatically routes to sandbox API when using test keys
-- **Laravel 10, 11 & 12** support with PHP 8.1+
+- **Laravel 10, 11, 12 & 13** support with PHP 8.1+
 
 ## Installation
 
